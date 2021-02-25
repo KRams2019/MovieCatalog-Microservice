@@ -1,0 +1,38 @@
+package com.example.movieratingservice.controller;
+
+public class RatingDataController {
+	
+
+	@Autowired
+	RatingDataService ratingService;
+	
+	@GetMapping("/movies/{movieId}")
+	public RatingDto getMovieRating(@PathVariable("movieId") int movieId) {
+		//System.out.println(movieId);
+		return ratingService.getMovieRating(movieId);	
+	}
+
+	@GetMapping("/user/{userId}")
+	public UserRatingDto getUserRatings(@PathVariable("userId") int userId) {
+		return ratingService.getUserRatings(userId);
+		
+	}
+	
+	@PostMapping("/addRating")
+	public RatingDto addRating(@RequestBody RatingDto rating) {
+		return ratingService.addRating(rating);
+	}
+	
+	@PostMapping("/adduser")
+	public UserRatingDto addUser(@RequestBody UserRatingDto rating) {
+		return ratingService.adduserRating(rating);
+	}
+	
+	
+	@GetMapping("/rating")
+	public List<RatingDto> getAllRating() {
+		return ratingService.getAvgRatings();
+		
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.example.movieinfoservice.entity;
+
+public class Movie {
+
+}

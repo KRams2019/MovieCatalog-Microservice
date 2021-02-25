@@ -1,0 +1,5 @@
+package com.example.movieratingservice.service;
+
+public class RatingDataService {
+
+}

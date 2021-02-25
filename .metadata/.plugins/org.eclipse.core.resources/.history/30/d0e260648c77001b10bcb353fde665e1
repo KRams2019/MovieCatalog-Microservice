@@ -1,0 +1,72 @@
+package com.example.moviecatalogservice.controller;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+
+
+@RestController
+@RequestMapping("/catalog")
+@CrossOrigin
+public class MovieCatalogController {
+
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired 
+	private MovieInfoService movieInfoService;
+	
+	@Autowired
+	private UserRatingInfoService userRatingInfoService;
+	
+    @GetMapping("/{userId}")
+    public List<CatalogItem> getCatalog(@PathVariable("userId") int userId) {
+
+        UserRating userRating = userRatingInfoService.getUserRating(userId);
+        return userRating.getRatings().stream()
+                .map(rating -> movieInfoService.getCatalogItem(rating))
+                .collect(Collectors.toList());
+    }
+    
+    @GetMapping("/allmovies")
+    public List<MovieAvgRating> getMovieCatalog() {
+    	System.err.println("Controler!!");
+        return movieInfoService.getMovieCatalog();           
+    }
+    
+    @GetMapping("/allRating")
+    public List<Rating> getMovieRating() { 	
+    	ResponseEntity<List<Rating>> rateResponse = restTemplate.exchange("http://localhost:8081/ratingsdata/rating", HttpMethod.GET,null,new ParameterizedTypeReference<List<Rating>>() {
+    	});
+        	
+    return rateResponse.getBody();
+    }
+    
+    
+    @PostMapping("/addmovie")
+    public Movie addMovie(@RequestBody Movie movie) {
+    	System.err.println(movie.getName());
+    	return movieInfoService.addMovie(movie);
+    }
+    
+    @GetMapping("/hello")
+    public String getMovieInfo() {
+    	String result= restTemplate.getForObject("http://localhost:8080/movies/hello",String.class);
+    	return "<h1>"+result+"</h1>";
+    }	
+ 
+ 
+}
