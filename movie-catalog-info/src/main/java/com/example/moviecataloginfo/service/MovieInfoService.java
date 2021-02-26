@@ -21,7 +21,7 @@ public class MovieInfoService {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	private final String movieUrl = "http://localhost:8080/movieinfo/";
+	private final String movieUrl = "http://movie-info-service:8080/movieinfo/";
 
 	
 	public CatalogItem getCatalogItem(Rating rating) {
@@ -62,7 +62,7 @@ public class MovieInfoService {
 	public List<Rating> getRatingResponse() {
 
 		ResponseEntity<List<Rating>> ratingResponse = restTemplate.exchange(
-				"http://localhost:8081/ratingsdata/rating", HttpMethod.GET, null,
+				"http://ratings-data-service:8081/ratingsdata/rating", HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Rating>>() {
 
 				});
@@ -73,7 +73,7 @@ public class MovieInfoService {
 	public List<Movie> getMovieResponse() {
 
 
-		ResponseEntity<List<Movie>> movieResponse = restTemplate.exchange("http://localhost:8080/movieinfo/getAll",HttpMethod.GET, null, new ParameterizedTypeReference<List<Movie>>() {});
+		ResponseEntity<List<Movie>> movieResponse = restTemplate.exchange("http://movie-info-service:8080/movieinfo/getAll",HttpMethod.GET, null, new ParameterizedTypeReference<List<Movie>>() {});
 		return movieResponse.getBody();
 		
 	}

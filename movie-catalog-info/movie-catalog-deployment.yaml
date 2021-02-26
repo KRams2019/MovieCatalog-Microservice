@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-catalog-service
+  labels:
+    app: movie-catalog-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-catalog-service
+  template:
+    metadata:
+      labels:
+        app: movie-catalog-service
+    spec:
+      containers:
+      - name: movie-catalog-service
+        image: krsai01/mv-cat-new:v1
+        ports:
+        - containerPort: 8082
+          #env:
+          #- name: mysqlservice
+          #value: mysql-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: movie-catalog-service
+  labels:
+    app: movie-catalog-service
+spec:
+  type: NodePort
+  ports:
+  - port: 8082
+    targetPort: 8082
+    nodePort: 32000
+  selector:
+    app: movie-catalog-service

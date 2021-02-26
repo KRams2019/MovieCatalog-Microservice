@@ -12,7 +12,7 @@ public class UserRatingInfoService {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	private final String  ratingUrl="http://localhost:8081/ratingsdata/";
+	private final String  ratingUrl="http://ratings-data-service :8081/ratingsdata/";
 
 	public UserRating getUserRating(int userId) {
 		 UserRating userRating = restTemplate.getForObject(ratingUrl+"user/"+userId, UserRating.class);

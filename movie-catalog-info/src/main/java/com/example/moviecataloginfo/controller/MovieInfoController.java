@@ -35,13 +35,13 @@ public class MovieInfoController {
 	@GetMapping("/mv-info")
 	public String getMovieInfo() {
 		// System.out.println("Got Hit!!");
-		return "<h1>"+resttemplate.getForObject("http://localhost:8080/movieinfo/hello", String.class)+"</h1>";
+		return "<h1>"+resttemplate.getForObject("http://movie-info-service:8080/movieinfo/hello", String.class)+"</h1>";
 	}
 
 	@GetMapping("/rt-data")
 	public String getRatingInfo() {
 		// System.out.println("Got Hit!!");
-		return "<h1>"+resttemplate.getForObject("http://localhost:8081/ratingsdata/hello", String.class)+"</h1>";
+		return "<h1>"+resttemplate.getForObject("http://ratings-data-service:8081/ratingsdata/hello", String.class)+"</h1>";
 	}
 
 	@GetMapping("/{userId}")

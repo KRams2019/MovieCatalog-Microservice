@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-info-service
+  labels:
+    app: movie-info-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-info-service
+  template:
+    metadata:
+      labels:
+        app: movie-info-service 
+    spec:
+      containers:
+      - name: movie-info-service
+        image: krsai01/mv-info:v1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: mysqlservice
+          value: mysql-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: movie-info-service
+  labels:
+    app: movie-info-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: movie-info-service
