@@ -1,0 +1,5 @@
+package com.example.moviecataloginfo.service;
+
+public class MovieInfoService {
+
+}

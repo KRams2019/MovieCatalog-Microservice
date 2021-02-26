@@ -1,0 +1,12 @@
+package com.example.moviecataloginfo.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserRatingInfoService {
+
+	public UserRating getUserRating(int userId) {
+		 UserRating userRating = restTemplate.getForObject(ratingUrl+userId, UserRating.class);
+		 return userRating;
+	}
+}
